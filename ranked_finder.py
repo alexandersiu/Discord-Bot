@@ -4,7 +4,7 @@ from soupsieve import match
 
 #this function receives a riot username (not case-sensitize) and outputs the ranked solo/duo rank and last 10 wins/lost
 def get_rank(username):
-    api_key = 'RGAPI-dfe3815a-f3e5-46ad-993b-9638b6c35799' #api developer key given by Riot
+    api_key = 'RGAPI-ca0efcb4-b8d5-4a86-9408-c81d86788066' #api developer key given by Riot
     watcher = LolWatcher(api_key) #uses the API key to access data from Riot
     region = 'na1' 
 
@@ -18,17 +18,21 @@ def get_rank(username):
     for i in range(len(ranked_stats)):
         gamemode = ranked_stats[i]['queueType']
         if gamemode == 'RANKED_SOLO_5x5':
-            queue = '**Ranked Solo/Duo:**'
+            queue = '**Ranked Solo/Duo:** '
+            tier = ranked_stats[i]['tier']
+            rank = ranked_stats[i]['rank']
+            lp = ranked_stats[i]['leaguePoints']
+            tier_rank.append(queue + ' ' + tier + ' ' + rank+ ' ' + str(lp) + ' LP')
         elif gamemode == 'RANKED_FLEX_SR':
-            queue = '**Ranked Flex:**'
-        elif gamemode == 'RANKED_TFT_PAIRS':
-            break
-        tier = ranked_stats[i]['tier']
-        rank = ranked_stats[i]['rank']
-        tier_rank.append(queue + ' ' + tier + ' ' + rank)
+            queue = '**Ranked Flex:** '
+            tier = ranked_stats[i]['tier']
+            rank = ranked_stats[i]['rank']
+            lp = ranked_stats[i]['leaguePoints']
+            tier_rank.append(queue + ' ' + tier + ' ' + rank + ' ' + str(lp) + ' LP')
     
     for i in range(len(tier_rank)):
         ranks = ' '.join(tier_rank)
+
     puuid = user_data.get('puuid')
     my_matches = watcher.match.matchlist_by_puuid(region, puuid) #receives the last 20 match IDs of the user
 
@@ -55,5 +59,5 @@ def get_rank(username):
                     win_lost.append('🟩')
                 break
     win_streak = ''.join(win_lost)
-    output = '**' + username + '** ' + ranks + ' ' + '**Recent 10 Games:** ' + win_streak 
+    output = [username, ranks, win_streak]
     return output

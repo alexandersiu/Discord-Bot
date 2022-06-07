@@ -15,7 +15,7 @@ def val_stats(username):
         if stat_type.text == 'Rating':
             rank = stat.find('span', {'class': 'stat__value'})
             break
-    rank_output = '**Rank:** ' + rank.text
+    rank_output = rank.text
     
     def stats(type_of_stat):
         all_stats = soup.find_all('div', {'class': 'numbers'})
@@ -24,7 +24,7 @@ def val_stats(username):
             if stat_type.text == type_of_stat:
                 stat_val = statter.find('span', {'class': 'value'})
                 break
-        stat_val_output = '**' + type_of_stat + ':** ' + stat_val.text
+        stat_val_output = stat_val.text
         return stat_val_output
 
     kd = stats('K/D Ratio')
@@ -33,5 +33,5 @@ def val_stats(username):
     
     wr = stats('Win %')
     output = [username, rank_output, kd, hs, wr]
-    output = ' '.join(output)
     return output 
+
