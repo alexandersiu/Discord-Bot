@@ -11,4 +11,4 @@ The Valorant data is obtained through webscrapping, using the BeautifulSoup libr
 ![image](https://user-images.githubusercontent.com/105384095/172506682-b4a20dfd-b776-46e7-83c2-16d40123f2e5.png)
 - `$val <username#tag>` : outputs the users rank, K/D ratio, headshot percentage, and winrate
 
-![image](https://user-images.githubusercontent.com/105384095/173692514-79f3faad-1034-4d00-b885-b5304cd3c14c.png)
+![image](https://user-images.githubusercontent.com/105384095/173692561-5305259f-9750-4650-8b2f-11f8c809cbb7.png)
