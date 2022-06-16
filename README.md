@@ -8,7 +8,7 @@ The Valorant data is obtained through webscrapping, using the BeautifulSoup libr
 
 - `$league <username>` : outputs the users solo/duo rank, ranked flex rank, latest game champion and KDA, and wins/losts of their last 10 games
 
-![image](https://user-images.githubusercontent.com/105384095/173692610-9ebfd209-3a5e-43e1-9b69-a6d267166717.png)
+![image](https://user-images.githubusercontent.com/105384095/174151656-4be7faa3-5693-4445-9eb0-baf3eb4015dc.png)
 - `$val <username#tag>` : outputs the users rank, K/D ratio, headshot percentage, and winrate
 
 ![image](https://user-images.githubusercontent.com/105384095/173692561-5305259f-9750-4650-8b2f-11f8c809cbb7.png)
