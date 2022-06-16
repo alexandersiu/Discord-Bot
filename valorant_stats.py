@@ -15,7 +15,14 @@ def val_stats(username):
         if stat_type.text == 'Rating':
             rank = stat.find('span', {'class': 'stat__value'})
             break
-    rank_output = rank.text
+
+    try: rank
+    except UnboundLocalError: rank = None
+
+    if rank is None:
+        return False
+    else:
+        rank_output = rank.text
     
     def stats(type_of_stat):
         all_stats = soup.find_all('div', {'class': 'numbers'})
@@ -28,10 +35,10 @@ def val_stats(username):
         return stat_val_output
 
     kd = stats('K/D Ratio')
-
     hs = stats('Headshot%')
-    
     wr = stats('Win %')
-    output = [username, rank_output, kd, hs, wr]
-    return output 
 
+    #agent_list = ['Brimstone', 'Cypher', 'Jett', 'Omen', 'Phoenix', 'Raze', 'Sage', 'Sova', 'Viper', 'Skye', 'Astra', 'Chamber', 'KAY/O', 'Neon', 'Reyna', 'Breach', 'Yoru', 'Killjoy']
+
+    output = [username, rank_output, kd, hs, wr]
+    return output

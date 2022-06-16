@@ -2,12 +2,17 @@
 from riotwatcher import LolWatcher, ApiError
 from soupsieve import match
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+RIOT_TOKEN = os.getenv('RIOT_TOKEN')
 #this function receives a riot username (not case-sensitize) and outputs the ranked solo/duo rank and last 10 wins/lost
 def get_rank(username):
 
-    watcher = LolWatcher('RGAPI-2cecf2b7-47eb-4758-b3b6-0e16dee94743') #uses the API key to access data from Riot
+    watcher = LolWatcher(RIOT_TOKEN) #uses the API key to access data from Riot
     region = 'na1' 
-    
 
     user_lower = username.lower()
     try:
@@ -46,9 +51,12 @@ def get_rank(username):
     matches = []
 
     #pre-loads the match information about each of the 10 matches and appends them into a list (we do this to decrease time)
-    for i in range(10):
-        last_match = my_matches[i]
-        matches.append(watcher.match.by_id(region, last_match))
+    try: 
+        for i in range(10):
+            last_match = my_matches[i]
+            matches.append(watcher.match.by_id(region, last_match))
+    except IndexError: #if the user has less than 10 matches, this will catch the error and return False
+        return False
 
     win_lost = []
 
@@ -74,18 +82,22 @@ def get_rank(username):
         row = static_champ_list['data'][key]
         champ_dict[row['key']] = row['id']
     for champ in matches[0]['info']['participants']:
-        if champ['summonerName'] == username:
+        if champ['summonerName'].lower() == username:
             championId = champ['championId']
             kills = champ['kills']
             deaths = champ['deaths']
             assists = champ['assists']
-    if str(championId) in champ_dict:
-        champ_played = champ_dict[str(championId)]
+    try:
+        if str(championId) in champ_dict:
+            champ_played = champ_dict[str(championId)]
+    except UnboundLocalError:
+        return False
     
     kda = str(kills) + '/' + str(deaths) + '/' + str(assists)
 
     latest_match = champ_played + ' ' + kda
-    output = [username, ranks, win_streak, latest_match]
-    return output
 
-print(get_rank('GigaBlue'))
+    champ_img_url = 'http://ddragon.leagueoflegends.com/cdn/img/champion/splash/' + champ_played +'_0.jpg'
+
+    output = [username, ranks, win_streak, latest_match, champ_img_url]
+    return output

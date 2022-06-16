@@ -1,7 +1,6 @@
 import discord
 import os
 from dotenv import load_dotenv
-from discord.ext.commands import Bot
 
 from league_stats import get_rank
 from valorant_stats import val_stats
@@ -27,10 +26,10 @@ async def on_message(message): #event triggers each time a message is received
             await message.channel.send('User not found')
         else:
             embed = discord.Embed(title=username, description=username + '\'s League of Legends stats.', color = 0x00ff00)
-            embed.add_field(name='Rank', value=league_stats[1], inline=False)
+            embed.add_field(name='Rank:', value=league_stats[1], inline=False)
             embed.add_field(name='Latest Match:', value=league_stats[3], inline=False)
             embed.add_field(name='Recent 10 Games:', value=league_stats[2], inline=False)
-            embed.set_thumbnail(url='https://external-preview.redd.it/dsS255G3ZmccOdtTOnoNRttCNU6GnbPL-_UcZIVe3CM.jpg?auto=webp&s=2d0bc79223c689b94b0134eebdfa0cc1e587b44e')
+            embed.set_thumbnail(url=league_stats[4])
             await message.channel.send(embed=embed)
     if message.content.startswith('$val'):
         username = message.content[5:]
