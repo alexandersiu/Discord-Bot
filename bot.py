@@ -59,9 +59,11 @@ async def on_message(message): #event triggers each time a message is received
     if message.content.startswith('$fancam'):
         idol = message.content[8:]
         video_Info = get_Fancam(idol)
-        await message.channel.send(video_Info[0])
-
-
-
+        URLs = list(video_Info.keys())
+        view_Count = list(video_Info.values())
+        embed = discord.Embed(title = idol + '\'s Top 5 Fancams on YouTube', color = 0x00ff00)
+        for i in range(5):
+            embed.add_field(name=URLs[i], value= str(view_Count[i]) + ' views', inline = False)
+        await message.channel.send(embed=embed)
 client.run(TOKEN)
 
