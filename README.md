@@ -1,6 +1,6 @@
 # Discord-Bot
 
-> This Discord bot allows for users to type in discord chat to see their League of Legends or their Valorant stats. 
+> This Discord bot allows for users to type in discord chat to see their League of Legends or their Valorant stats, along side with some other fun commands I wanted to add. 
 
 The League of Legends data is supported by the Riot API, using their updated datasets to display the stats the bot outputs. This is seen in the ranked_finder.py file.
 
