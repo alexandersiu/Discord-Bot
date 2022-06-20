@@ -1,9 +1,11 @@
 import discord
 import os
+import random
 from dotenv import load_dotenv
 
 from league_stats import get_rank
 from valorant_stats import val_stats
+from fancam import get_Fancam
 
 load_dotenv()
 
@@ -45,6 +47,21 @@ async def on_message(message): #event triggers each time a message is received
             #embed.add_field(name='Most Played Agent', value=valorant_stats[5], inline=False)
             embed.set_thumbnail(url='https://preview.redd.it/tch01tr0edn51.png?width=1700&format=png&auto=webp&s=f478ab468ffd393d83d690b6b0797b682325d8ed')
             await message.channel.send(embed=embed)
-    
+    if message.content.startswith('$love'):
+        string = message.content[6:]
+        target1 = string.split(', ')[0]
+        target2 = string.split(', ')[1]
+        loveAmount = random.randint(0, 100)
+        embed = discord.Embed(title = 'Lover Meter', color = 0x00ff00)
+        embed.add_field(name = target1 + ' loves ' + target2, value = str(loveAmount) + '%', inline = False)
+        embed.set_thumbnail(url='https://thumbs.dreamstime.com/z/love-meter-heart-indicator-day-full-test-valentine-background-card-progress-171670379.jpg')
+        await message.channel.send(embed=embed)
+    if message.content.startswith('$fancam'):
+        idol = message.content[8:]
+        video_Info = get_Fancam(idol)
+        await message.channel.send(video_Info[0])
+
+
+
 client.run(TOKEN)
 
