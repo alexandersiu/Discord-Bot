@@ -12,3 +12,14 @@ The Valorant data is obtained through webscrapping, using the BeautifulSoup libr
 - `$val <username#tag>` : outputs the users rank, K/D ratio, headshot percentage, and winrate
 
 ![image](https://user-images.githubusercontent.com/105384095/173692561-5305259f-9750-4650-8b2f-11f8c809cbb7.png)
+
+Some other new features added are a love command, which calculates the compatibility of two things, and a fancam command, which outputs five of the most viewed fancams of your favorite k-pop idol.
+
+- `$love <input 1>, <input 2>` : outputs the compatibility of the first and second input
+
+![image](https://user-images.githubusercontent.com/105384095/174928230-19609dfe-b3f0-4c7f-8de1-46d8f16ae29e.png)
+
+- `$fancam <idol's name>` : outputs five of the most viewed fancams of your favorite k-pop idol, along with their view counts
+
+![image](https://user-images.githubusercontent.com/105384095/174928381-c4523425-c3a4-4815-b19e-664e52d05873.png)
+
