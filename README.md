@@ -23,3 +23,6 @@ Some other new features added are a love command, which calculates the compatibi
 
 ![image](https://user-images.githubusercontent.com/105384095/174928381-c4523425-c3a4-4815-b19e-664e52d05873.png)
 
+- `$webtoon` : outputs a random webtoon with its title, cover art, rating, and a summary of the plot
+
+![image](https://user-images.githubusercontent.com/105384095/175999398-eb45e4db-ba57-46c8-a3a5-3ad7bcad093e.png)
