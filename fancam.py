@@ -1,22 +1,26 @@
 from youtubesearchpython import VideosSearch
 
-def get_Fancam(idol_Name):
-    yt_Search = idol_Name + ' fancam'
+class Fancam():
+    def __init__(self, idol_name):
+        self.search_amount = 5
+        self.yt_search = VideosSearch(idol_name + ' fancam', limit=self.search_amount)
+        self.result = self.yt_search.result()
+        self.video_output = {}
+    
+        self.run()
 
-    search_Amount = 10
-    videos_Search = VideosSearch(yt_Search, limit=search_Amount)
-    result = videos_Search.result()
+    def video_info(self):
+        for search in range(self.search_amount):
+            self.search_output = self.result.get('result')[search]
+            self.video_title = self.search_output.get('title')
+            self.video_URL = self.search_output.get('link')
 
-    video_Dict = {}
-    for i in range(search_Amount):
-        video_Info = result.get('result')[i]
-        video_URL = video_Info.get('link')
-        video_Title = video_Info.get('title')
-        video_Views = video_Info.get('viewCount')
-        video_Views = list(video_Views.values())[0]
-        video_Views = video_Views.split(' ')[0]
-        video_Views = int(video_Views.replace(',', ''))
-        video_Dict.update({video_URL : video_Views})
+            self.video_output.update({self.video_title : self.video_URL})
+            
+        return self.video_output
 
-    sorted_Dict = dict(sorted(video_Dict.items(), key=lambda item: item[1], reverse=True))
-    return sorted_Dict
+    def run(self):
+        self.video_info()
+
+fancam = Fancam('jisoo')
+

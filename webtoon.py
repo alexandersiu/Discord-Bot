@@ -45,7 +45,10 @@ class Webtoon:
 
     def webtoon_summary(self):
         self.summary = self.selected_webtoon_soup.find('div', {'class' : 'summary__content'})
-        return self.summary.text
+        if self.summary.text == None:
+            return 'No Summary'
+        else:
+            return self.summary.text
 
     def run(self):
         self.webtoon_title()
