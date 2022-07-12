@@ -3,10 +3,12 @@ import discord
 
 from discord.ext import commands
 from dotenv import load_dotenv
+from regex import E
 
 from random_playlist_video import RandomPlaylistVideo
 from league import League
 from webtoon import Webtoon
+from anime import RandomAnime
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -46,6 +48,15 @@ async def webtoon(ctx):
     embed.set_thumbnail(url=webtoon_info.webtoon_img())
     embed.add_field(name='Rating:', value=webtoon_info.webtoon_rating() + ' / 5')
     embed.add_field(name='Summary:', value=webtoon_info.webtoon_summary())
+    await ctx.send(embed=embed)
+
+@bot.command()
+async def anime(ctx):
+    anime_info = RandomAnime()
+    embed = discord.Embed(title=anime_info.anime_title(), url=anime_info.get_anime())
+    embed.set_thumbnail(url=anime_info.anime_thumbnail())
+    embed.add_field(name='**MyAnimeList Rank**', value=anime_info.anime_rating(), inline=False)
+    embed.add_field(name='**Synopsis**', value=anime_info.anime_synopsis())
     await ctx.send(embed=embed)
 
 bot.run(TOKEN)
