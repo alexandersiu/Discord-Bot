@@ -13,3 +13,10 @@ The League of Legends data is supported by the Riot API, using their updated dat
 
 ![image](https://user-images.githubusercontent.com/105384095/175999398-eb45e4db-ba57-46c8-a3a5-3ad7bcad093e.png)
 
+- `$anime`: outputs a random anime from the top 1000 animes on MyAnimeList with the title, thumbnail, rating, and summary
+
+![image](https://user-images.githubusercontent.com/105384095/178405845-9934425c-6801-4df6-b2ab-bc57279e7706.png)
+
+- `$rap`: outputs a random rap video from a YouTube playlist, this command is adaptiable with other YouTube playlists
+
+![image](https://user-images.githubusercontent.com/105384095/178405981-dc6f2757-6f1c-42c4-81d9-b0c7c7097bc9.png)
