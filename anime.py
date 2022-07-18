@@ -1,11 +1,13 @@
 from bs4 import BeautifulSoup
+from AnilistPython import Anilist
 import requests
 import random
 import re
 
+
 class RandomAnime:
     def __init__(self):
-        self.url = 'https://myanimelist.net/topanime.php?limit=' + str(random.randint(0, 1000))
+        self.url = 'https://myanimelist.net/topanime.php?type=bypopularity&limit=' + str(random.randint(0, 1500))
         self.html = requests.get(self.url).text
         self.soup = BeautifulSoup(self.html, 'lxml')
 
@@ -26,8 +28,15 @@ class RandomAnime:
 
     def anime_title(self):
         self.title = self.anime_soup.find('h1', {'class' : 'title-name h1_bold_none'})
-
+        
         return self.title.text
+    
+    def anime_title_eng(self):
+        self.title_eng = self.anime_soup.find('p', {'class' : 'title-english title-inherit'})
+        if self.title_eng == None:
+            return False
+        else:
+            return self.title_eng.text
 
     def anime_thumbnail(self):
         self.thumbnail_html = self.anime_soup.find('div', {'style' : 'text-align: center;'})
@@ -43,6 +52,11 @@ class RandomAnime:
 
         return self.rating.text
 
+    def anime_popularity(self):
+        self.popularity = self.anime_soup.find('span', {'class' : 'numbers popularity'})
+
+        return self.popularity.text
+
     def anime_synopsis(self):
         self.synopsis = self.anime_soup.find('p', {'itemprop' : 'description'})
         self.synopsis = str(self.synopsis.text)[:1024]
@@ -53,5 +67,27 @@ class RandomAnime:
         self.get_anime()
         self.anime_page()
         self.anime_title()
+        self.anime_title_eng()
         self.anime_thumbnail()
+        self.anime_rating()
+        self.anime_popularity()
         self.anime_synopsis()
+
+
+
+class AnimeByName:
+    def __init__(self, anime):
+        self.anilist = Anilist()
+        self.anime_dict = self.anilist.get_anime(anime)
+
+        self.anime_name_jp = self.anime_dict['name_romaji']
+        self.anime_name_eng = self.anime_dict['name_english']
+        self.anime_cover_art = self.anime_dict['cover_image']
+        self.anime_score = self.anime_dict['average_score']
+
+        self.anime_genres = self.anime_dict['genres']
+        self.anime_genres = ', '.join(map(str, self.anime_genres))
+
+        self.anime_description = self.anime_dict['desc'][:1024]
+        self.anime_description = self.anime_description.replace('<br>', '')
+        self.anime_description = self.anime_description.replace('<i>', '')

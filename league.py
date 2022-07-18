@@ -14,7 +14,6 @@ class League:
         self.username_lower = username.lower()
 
         self.user_data = self.lol_watcher.summoner.by_name(self.region, username)
-
         self.ranked_stats = self.lol_watcher.league.by_summoner(self.region, self.user_data['id'])
         self.patch = self.lol_watcher.data_dragon.versions_for_region(self.region)['n']['champion']
         self.puuid = self.user_data.get('puuid')
@@ -42,9 +41,12 @@ class League:
                 self.tier_rank.append(self.queue + ' ' + self.tier + ' ' + self.rank + ' ' + str(self.lp) + ' LP')
         
         for i in range(len(self.tier_rank)):
-            ranks = ' '.join(self.tier_rank)
+            self.ranks = ' '.join(self.tier_rank)
         
-        return ranks
+        try: 
+            return self.ranks
+        except:
+            return 'No current rank'
 
     def last_ten_matches(self):
         self.matches = []
@@ -55,7 +57,7 @@ class League:
                 self.last_match = self.my_matches[i]
                 self.matches.append(self.lol_watcher.match.by_id(self.region, self.last_match))
         except IndexError:
-            return False
+            return 'No matches played'
 
         for i in range(10):
             self.match_detail = self.matches[i]
@@ -68,6 +70,7 @@ class League:
                         self.win_lost.append(':green_square:')
                     break
         self.win_streak = ''.join(self.win_lost)
+
         return self.win_streak
     
     def champ_index(self):
@@ -77,22 +80,30 @@ class League:
             self.champ_dict[self.row['key']] = self.row['id']
 
     def last_match_champ_kda(self):
-        for champ in self.matches[0]['info']['participants']:
-            if champ['summonerName'].lower() == self.username_lower:
-                self.championId = champ['championId']
-                self.kills = champ['kills']
-                self.deaths = champ['deaths']
-                self.assists = champ['assists']
-        if str(self.championId) in self.champ_dict:
-            self.champ_played = self.champ_dict[str(self.championId)]
+        try:
+            for champ in self.matches[0]['info']['participants']:
+                if champ['summonerName'].lower() == self.username_lower:
+                    self.championId = champ['championId']
+                    self.kills = champ['kills']
+                    self.deaths = champ['deaths']
+                    self.assists = champ['assists']
+            if str(self.championId) in self.champ_dict:
+                self.champ_played = self.champ_dict[str(self.championId)]
 
-        self.kda = str(self.kills) + '/' + str(self.deaths) + '/' + str(self.assists)
-        self.latest_match = self.champ_played + ' ' + self.kda
-        return self.latest_match
+            self.kda = str(self.kills) + '/' + str(self.deaths) + '/' + str(self.assists)
+            self.latest_match = self.champ_played + ' ' + self.kda
+
+            return self.latest_match
+        except:
+            return 'No matches played'
 
     def champ_img(self):
-        self.champ_img_url = 'http://ddragon.leagueoflegends.com/cdn/img/champion/splash/' + self.champ_played +'_0.jpg'
-        return self.champ_img_url
+        try:
+            self.champ_img_url = 'http://ddragon.leagueoflegends.com/cdn/img/champion/splash/' + self.champ_played +'_0.jpg'
+
+            return self.champ_img_url
+        except:
+            return 'https://cdn.discordapp.com/attachments/765556266667868173/998662901604814950/58e8ff52eb97430e819064cf.png'
     
     def run(self):
         self.current_rank()
