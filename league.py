@@ -3,25 +3,27 @@ import os
 from riotwatcher import LolWatcher, ApiError
 from dotenv import load_dotenv
 
+#loads information from .env file
 load_dotenv()
 RIOT_TOKEN = os.getenv('RIOT_TOKEN')
 
 class League:
     def __init__(self, username):
-        self.lol_watcher = LolWatcher(RIOT_TOKEN)
-        self.region = 'na1'
+        self.lol_watcher = LolWatcher(RIOT_TOKEN) #uses class from riotwatcher 
+        self.region = 'na1' #you are able to change your region here
 
         self.username_lower = username.lower()
 
-        self.user_data = self.lol_watcher.summoner.by_name(self.region, username)
-        self.ranked_stats = self.lol_watcher.league.by_summoner(self.region, self.user_data['id'])
-        self.patch = self.lol_watcher.data_dragon.versions_for_region(self.region)['n']['champion']
-        self.puuid = self.user_data.get('puuid')
-        self.my_matches = self.lol_watcher.match.matchlist_by_puuid(self.region, self.puuid)
-        self.static_champ_list = self.lol_watcher.data_dragon.champions(self.patch, False, 'en_US')
+        self.user_data = self.lol_watcher.summoner.by_name(self.region, username) #provides user data from the username
+        self.ranked_stats = self.lol_watcher.league.by_summoner(self.region, self.user_data['id']) #provides ranked stats from the username
+        self.patch = self.lol_watcher.data_dragon.versions_for_region(self.region)['n']['champion'] #provides data from the current patch
+        self.puuid = self.user_data.get('puuid') #provides the puuid from the user data
+        self.my_matches = self.lol_watcher.match.matchlist_by_puuid(self.region, self.puuid) #provides the match data from the puuid
+        self.static_champ_list = self.lol_watcher.data_dragon.champions(self.patch, False, 'en_US') #provides the champ list
         
         self.run()
         
+    #this function finds the current ranks (Solo/Duo and Flex) of the user
     def current_rank(self):
         self.tier_rank = []
 
@@ -48,6 +50,7 @@ class League:
         except:
             return 'No current rank'
 
+    #this function shows a win or a lost in the users last 10 matches
     def last_ten_matches(self):
         self.matches = []
         self.win_lost = []
@@ -73,12 +76,14 @@ class League:
 
         return self.win_streak
     
+    #this function provides the all of the champions based on their number id
     def champ_index(self):
         self.champ_dict = {}
         for key in self.static_champ_list['data']:
             self.row = self.static_champ_list['data'][key]
             self.champ_dict[self.row['key']] = self.row['id']
 
+    #this function will find the K/D/A from the user's last match
     def last_match_champ_kda(self):
         try:
             for champ in self.matches[0]['info']['participants']:
@@ -97,6 +102,7 @@ class League:
         except:
             return 'No matches played'
 
+    #this functions the champion image from the last champion played by the user
     def champ_img(self):
         try:
             self.champ_img_url = 'http://ddragon.leagueoflegends.com/cdn/img/champion/splash/' + self.champ_played +'_0.jpg'
@@ -105,6 +111,7 @@ class League:
         except:
             return 'https://cdn.discordapp.com/attachments/765556266667868173/998662901604814950/58e8ff52eb97430e819064cf.png'
     
+    #this functions runs all of the functions
     def run(self):
         self.current_rank()
         self.last_ten_matches()

@@ -1,6 +1,7 @@
 import random
 from pytube import Playlist
 
+#this class will take a youtube playlist as an input and will randomly choose a video from the playlist to output
 class RandomPlaylistVideo:
     def __init__(self, playlist):
         self.urls = []
