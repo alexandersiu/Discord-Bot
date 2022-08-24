@@ -4,6 +4,8 @@
 
 The bot usually takes a few seconds (5-10 seconds) to load. 
 
+For users to implement the bot themselves, you first need to create a `.env` file that contains a your Discord bot token (useful source: https://realpython.com/how-to-make-a-discord-bot-python/). Next, you would have to load your own Riot development API key (https://developer.riotgames.com/docs/portal#_getting_started)._ This key expires every 24 hours, unless you apply for the Personal API key. You would also put this key into the `.env` file.
+
 The League of Legends data is supported by the Riot API, using their updated datasets to display the stats the bot outputs. This is seen in the league.py file.
 
 
