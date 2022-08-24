@@ -2,7 +2,9 @@
 
 > This Discord bot allows for users to type in discord chat to see their League of Legends statistics, along side with some other fun commands I wanted to add. 
 
-The League of Legends data is supported by the Riot API, using their updated datasets to display the stats the bot outputs. This is seen in the ranked_finder.py file.
+The bot usually takes a few seconds (5-10 seconds) to load. 
+
+The League of Legends data is supported by the Riot API, using their updated datasets to display the stats the bot outputs. This is seen in the league.py file.
 
 
 - `$league <username>` : outputs the users solo/duo rank, ranked flex rank, latest game champion and KDA, and wins/losts of their last 10 games
